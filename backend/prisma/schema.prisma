@@ -9,3 +9,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Module {
+  id              Int           @id @default(autoincrement())
+  name            String        @unique
+  type            String
+  location        String
+  current_value   Float?
+  current_state   Boolean       @default(false)
+  created         DateTime      @default(now())
+  type_ref        Type_Ref      @relation(fields: [type], references: [name])
+  state_log       State_Log[]
+  data_log        Data_Log[]
+}
+
+model Type_Ref {
+  name            String        @id
+  unit            String
+  module          Module[]
+}
+
+model State_Log {
+  id              Int           @id @default(autoincrement())
+  module_id       Int
+  state           Boolean
+  is_manual       Boolean       @default(false)   // if state has been changed manually
+  time            DateTime      @default(now())
+  module          Module        @relation(fields: [module_id], references: [id], onDelete: Cascade)
+}
+
+// Maybe create a table for each module's data logs ?
+model Data_Log {
+  id              Int           @id @default(autoincrement())
+  module_id       Int
+  measured        Float?
+  time            DateTime      @default(now())
+  module          Module        @relation(fields: [module_id], references: [id], onDelete: Cascade)
+}
+
