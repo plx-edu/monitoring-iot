@@ -7,25 +7,38 @@ import { UpdateModuleDto } from './dto/update-module.dto';
 export class ModulesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createModuleDto: CreateModuleDto) {
-    return 'This action adds a new module';
+  async create(createModuleDto: CreateModuleDto) {
+    return await this.prisma.module.create({
+      data: createModuleDto,
+    });
   }
 
   async findAll() {
-    const modules = await this.prisma.module.findMany();
-    return modules;
-    return `This action returns all modules`;
+    return await this.prisma.module.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} module`;
+  async findOne(id: number) {
+    return await this.prisma.module.findUnique({
+      where: {
+        id: id,
+      },
+    });
   }
 
-  update(id: number, updateModuleDto: UpdateModuleDto) {
-    return `This action updates a #${id} module`;
+  async update(id: number, updateModuleDto: UpdateModuleDto) {
+    return await this.prisma.module.update({
+      where: {
+        id: id,
+      },
+      data: updateModuleDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} module`;
+  async remove(id: number) {
+    return await this.prisma.module.delete({
+      where: {
+        id: id,
+      },
+    });
   }
 }
