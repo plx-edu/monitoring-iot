@@ -33,7 +33,7 @@ model State_Log {
   id              Int           @id @default(autoincrement())
   module_id       Int
   state           Boolean
-  is_manual       Boolean       @default(false)   // if state has been changed manually
+  user_set        Boolean       @default(false)   // if state has been changed manually
   time            DateTime      @default(now())
   module          Module        @relation(fields: [module_id], references: [id], onDelete: Cascade)
 }
