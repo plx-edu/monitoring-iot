@@ -4,8 +4,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
 
-const pcl = new PrismaClient();
-
 @Injectable()
 export class ModulesService {
   constructor(private prisma: PrismaService) {}
