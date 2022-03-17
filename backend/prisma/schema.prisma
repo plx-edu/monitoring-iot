@@ -16,7 +16,7 @@ model Module {
   type            String
   location        String
   current_value   Float?
-  current_state   Boolean       @default(false)
+  current_state   Boolean       @default(true)
   created         DateTime      @default(now())
   type_ref        Type_Ref      @relation(fields: [type], references: [name])
   state_log       State_Log[]
@@ -32,7 +32,7 @@ model Type_Ref {
 model State_Log {
   id              Int           @id @default(autoincrement())
   module_id       Int
-  state           Boolean
+  state           Boolean       @default(true)
   user_set        Boolean       @default(false)   // if state has been changed manually
   time            DateTime      @default(now())
   module          Module        @relation(fields: [module_id], references: [id], onDelete: Cascade)
