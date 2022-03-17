@@ -13,18 +13,19 @@ datasource db {
 model Module {
   id              Int           @id @default(autoincrement())
   name            String        @unique
-  type            String
+  type            Int
   location        String
   current_value   Float?
   current_state   Boolean       @default(true)
   created         DateTime      @default(now())
-  type_ref        Type_Ref      @relation(fields: [type], references: [name])
+  type_ref        Type_Ref      @relation(fields: [type], references: [id])
   state_log       State_Log[]
   data_log        Data_Log[]
 }
 
 model Type_Ref {
-  name            String        @id
+  id              Int           @id @default(autoincrement())
+  name            String        @unique
   unit            String
   module          Module[]
 }
