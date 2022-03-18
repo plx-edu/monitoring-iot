@@ -34,48 +34,27 @@ export class ModulesService {
   }
 
   async findAll() {
-    return await this.prisma.module.findMany();
+    return await this.prisma.module.findMany({
+      include: {
+        state_log: true,
+        data_log: true,
+      },
+      orderBy: {
+        id: 'asc',
+      },
+    });
   }
 
-  // async findOne(id: number) {
-  //   return await this.prisma.module.findUnique({
-  //     where: {
-  //       id: id,
-  //     },
-  //   });
-  // }
-
   async findOne(id: number) {
-    // const module = await this.prisma.module
-    return await this.prisma.module
-      .findUnique({
-        where: {
-          id: id,
-        },
-      })
-      .then(async (res) => {
-        if (res === null) return {};
-
-        res['state_logs'] = await this.prisma.state_Log.findMany({
-          where: {
-            module_id: id,
-          },
-          orderBy: {
-            time: 'asc',
-          },
-        });
-
-        res['data_logs'] = await this.prisma.data_Log.findMany({
-          where: {
-            module_id: id,
-          },
-          orderBy: {
-            time: 'asc',
-          },
-        });
-
-        return res;
-      });
+    return await this.prisma.module.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        state_log: true,
+        data_log: true,
+      },
+    });
 
     // return module;
   }
