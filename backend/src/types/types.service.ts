@@ -17,15 +17,23 @@ export class TypesService {
     // return `This action returns all types`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} type`;
+  async findOne(id: number) {
+    return await this.prisma.type_Ref.findUnique({
+      where: {
+        id: id,
+      },
+    });
   }
 
   update(id: number, updateTypeDto: UpdateTypeDto) {
     return `This action updates a #${id} type`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} type`;
+  async remove(id: number) {
+    return await this.prisma.type_Ref.delete({
+      where: {
+        id: id,
+      },
+    });
   }
 }
