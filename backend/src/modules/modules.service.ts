@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
@@ -55,8 +54,6 @@ export class ModulesService {
         data_log: true,
       },
     });
-
-    // return module;
   }
 
   async update(id: number, umDto: UpdateModuleDto) {
