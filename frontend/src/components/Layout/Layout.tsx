@@ -1,5 +1,11 @@
 import React from "react";
+import Header from "../Header/Header";
 
 export default function Layout(props: {children: React.ReactNode}) {
-	return <section>Layout{props.children}</section>;
+	return (
+		<section>
+			<Header />
+			{props.children}
+		</section>
+	);
 }
