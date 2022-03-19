@@ -3,9 +3,10 @@ import Header from "../Header/Header";
 
 export default function Layout(props: {children: React.ReactNode}) {
 	return (
-		<section>
+		<section className="flex flex-col h-full">
 			<Header />
-			{props.children}
+
+			<section className="h-full overflow-hidden overflow-y-scroll">{props.children}</section>
 		</section>
 	);
 }

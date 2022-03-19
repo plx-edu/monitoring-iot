@@ -6,11 +6,11 @@ import Module from "./components/Module/Module";
 
 function App() {
 	return (
-		<section className="App">
+		<section className="App h-screen w-screen bg-slate-300 overflow-hidden">
 			<Layout>
 				<Routes>
 					<Route path="/" element={<DashBoard />} />
-					<Route path="/module/:id" element={<Module />} />
+					{/* <Route path="/module/:id" element={<Module />} /> */}
 				</Routes>
 			</Layout>
 		</section>
