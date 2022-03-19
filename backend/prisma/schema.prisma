@@ -18,6 +18,7 @@ model Module {
   current_value   Float?
   current_state   Boolean       @default(true)
   created         DateTime      @default(now())
+  uptime_start    DateTime?
   type_ref        Type_Ref      @relation(fields: [type], references: [id])
   state_log       State_Log[]
   data_log        Data_Log[]
