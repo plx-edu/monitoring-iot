@@ -54,7 +54,7 @@ export default function ModuleDetail() {
 			<section className="flex justify-between">
 				{/* Module section */}
 				{/* <section className="flex flex-col gap-5 bg-zinc-800"> */}
-				<section className="relative h-screen w-60 bg-zinc-500">
+				<section className="relative w-60 bg-zinc-xxx top-0 bottom-0">
 					<section className="flex flex-col gap-5 items-center sticky top-20">
 						<Module module={item} />
 						<button
@@ -132,26 +132,26 @@ export default function ModuleDetail() {
 	}
 }
 
-function setupChart() {
-	const labels = ["January", "February", "March", "April", "May", "June"];
-	const data = {
-		labels: labels,
-		datasets: [
-			{
-				label: "My First dataset",
-				backgroundColor: "hsl(252, 82.9%, 67.8%)",
-				borderColor: "hsl(252, 82.9%, 67.8%)",
-				data: [0, 10, 5, 2, 20, 30, 45],
-			},
-		],
-	};
+// function setupChart() {
+// 	const labels = ["January", "February", "March", "April", "May", "June"];
+// 	const data = {
+// 		labels: labels,
+// 		datasets: [
+// 			{
+// 				label: "My First dataset",
+// 				backgroundColor: "hsl(252, 82.9%, 67.8%)",
+// 				borderColor: "hsl(252, 82.9%, 67.8%)",
+// 				data: [0, 10, 5, 2, 20, 30, 45],
+// 			},
+// 		],
+// 	};
 
-	const configLineChart = {
-		type: "line",
-		data,
-		options: {},
-	};
+// 	const configLineChart = {
+// 		type: "line",
+// 		data,
+// 		options: {},
+// 	};
 
-	// let chartLine = new Chart(document.getElementById("chartLine"), configLineChart);
-	// let chartLine = (document.getElementById("chartLine"), configLineChart);
-}
+// 	// let chartLine = new Chart(document.getElementById("chartLine"), configLineChart);
+// 	// let chartLine = (document.getElementById("chartLine"), configLineChart);
+// }
