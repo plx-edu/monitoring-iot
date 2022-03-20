@@ -32,12 +32,7 @@ export default function ModuleDetail() {
 		fetch(apiResource("modules", item?.id), apiRequest("patch", newState))
 			.then((res) => res.json())
 			.then((result) => {
-				console.log(item);
-				console.log(result);
-
-				// setItem(placeholder);
 				setItem(result);
-				console.log(item);
 			});
 	}
 

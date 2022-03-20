@@ -104,9 +104,12 @@ export class ModulesService {
             : {},
 
         // 3. Insert corresponding data log
-        data_log: {
-          create: { measured: umDto.current_value },
-        },
+        data_log:
+          umDto.current_value !== undefined
+            ? {
+                create: { measured: umDto.current_value },
+              }
+            : {},
       },
       include: {
         state_log: true,
