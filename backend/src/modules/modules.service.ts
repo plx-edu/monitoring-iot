@@ -76,7 +76,7 @@ export class ModulesService {
 
         // set new uptimeStart if state(true) and current uptimeStart(null)
         uptime_start: umDto.current_state
-          ? currentUptimeStart[0]
+          ? currentUptimeStart[0] !== null
             ? currentUptimeStart[0]
             : new Date(Date.now())
           : null,
