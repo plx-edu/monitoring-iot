@@ -5,5 +5,5 @@ export class CreateModuleDto {
   location: string;
   current_value: number;
   current_state: boolean;
-  uptime_start: Date;
+  uptime_start: Date | undefined;
 }

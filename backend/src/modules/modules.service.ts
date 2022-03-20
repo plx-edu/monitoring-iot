@@ -16,6 +16,8 @@ export class ModulesService {
         type: cmDto.type,
         current_value: cmDto.current_value,
         current_state: cmDto.current_state,
+        uptime_start: cmDto.current_state ? new Date(Date.now()) : undefined,
+
         // 2. Insert corresponding state log
         state_log: {
           create: {
@@ -57,6 +59,11 @@ export class ModulesService {
   }
 
   async update(id: number, umDto: UpdateModuleDto) {
+    const currentUptimeStart = this.prisma.module.findUnique({
+      where: { id: id },
+      select: { uptime_start: true },
+    });
+
     return await this.prisma.module.update({
       where: {
         id: id,
@@ -66,6 +73,13 @@ export class ModulesService {
         // if state switches to false, value becomes null
         current_value: umDto.current_state ? umDto.current_value : null,
         current_state: umDto.current_state,
+
+        // set new uptimeStart if state(true) and current uptimeStart(null)
+        uptime_start: umDto.current_state
+          ? currentUptimeStart[0]
+            ? currentUptimeStart[0]
+            : new Date(Date.now())
+          : null,
 
         // 2. Insert corresponding state log
         state_log: {
