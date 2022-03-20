@@ -3,6 +3,7 @@ import Layout from "./components/Layout/Layout";
 import {Routes, Route} from "react-router";
 import DashBoard from "./components/DashBoard/DashBoard";
 import Module from "./components/Module/Module";
+import ModuleDetail from "./components/Module/ModuleDetail";
 
 function App() {
 	return (
@@ -10,7 +11,7 @@ function App() {
 			<Layout>
 				<Routes>
 					<Route path="/" element={<DashBoard />} />
-					{/* <Route path="/module/:id" element={<Module />} /> */}
+					<Route path="/module/:id" element={<ModuleDetail />} />
 				</Routes>
 			</Layout>
 		</section>

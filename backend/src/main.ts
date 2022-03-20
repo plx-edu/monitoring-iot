@@ -1,3 +1,4 @@
+import { All } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
@@ -11,7 +12,10 @@ async function bootstrap() {
   const prismaService: PrismaService = app.get(PrismaService);
   prismaService.enableShutdownHooks(app);
 
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,PUT,PATCH,POST,DELETE',
+  });
   await app.listen(port, () =>
     console.log(`::::: Listening on port ${port} :::::`),
   );

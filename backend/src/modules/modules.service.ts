@@ -31,6 +31,11 @@ export class ModulesService {
           create: { measured: cmDto.current_value },
         },
       },
+      include: {
+        state_log: true,
+        data_log: true,
+        type_ref: true,
+      },
     });
   }
 
@@ -102,6 +107,11 @@ export class ModulesService {
         data_log: {
           create: { measured: umDto.current_value },
         },
+      },
+      include: {
+        state_log: true,
+        data_log: true,
+        type_ref: true,
       },
     });
   }

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {apiResource} from "../../utilities/methods";
 import {typeModule} from "../../utilities/types";
 import Module from "../Module/Module";
 
@@ -6,7 +7,7 @@ export default function DashBoard() {
 	const [items, setItems] = useState<typeModule[]>([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:3001/modules`)
+		fetch(apiResource("modules"))
 			.then((res) => res.json())
 			.then((result) => setItems(result));
 	}, []);
