@@ -29,18 +29,23 @@ export function formatDate(date: Date) {
 }
 
 export function getUptime(startTime: Date) {
-	// console.log(startTime);
-	let uptime = Date.now() - startTime.getTime();
+	if (!startTime) return "n/a";
 
-	const ms = uptime % 1000;
-	uptime = (uptime - ms) / 1000;
+	let t = Date.now() - new Date(startTime).getTime();
 
-	const secs = uptime % 60;
-	uptime = (uptime - secs) / 60;
+	const ms = t % 1000;
+	t = (t - ms) / 1000;
 
-	const mins = uptime % 60;
-	const hours = (uptime - mins) / 60;
+	const secs = t % 60;
+	t = (t - secs) / 60;
+
+	const mins = t % 60;
+	const hours = (t - mins) / 60;
 
 	return hours + "h" + mins + "min" + secs + "s";
 	// return hours + "h" + mins + "min" + secs + "s" + ms + "ms";
+}
+
+export function getModuleName() {
+	console.log("random name generator");
 }

@@ -30,22 +30,25 @@ export default function Module(props: {module: typeModule}) {
 				</NavLink>
 			</div>
 			{/* Module id n°{id} */}
-			<div className="flex h-full justify-center items-center">
-				<p className="text-4xl font-semibold">{props.module.current_value ? props.module.current_value : "n/a"}</p>
-				<p>type: {props.module.type}</p>
-			</div>
-
-			<div className="flex flex-col justify-center items-center">
-				<p>
-					<span className="text-xs">Uptime: </span>
-					{getUptime(new Date(props.module.created))}
+			<p className="text-xs">{props.module.type_ref.name}</p>
+			<div className="flex flex-col h-full justify-center items-center">
+				<p className="text-4xl font-semibold">
+					{props.module.current_value ? props.module.current_value : "n/a"}
+					<span className="text-xl font-light"> {props.module.current_value ? props.module.type_ref.unit : ""}</span>
 				</p>
 			</div>
 
 			<div className="flex flex-col justify-center items-center">
-				<p>
-					<span className="text-xs">Location: </span>
-					{props.module.location}
+				<p className="text-xs">
+					Uptime:
+					<span className="font-medium"> {getUptime(props.module.uptime_start)}</span>
+				</p>
+			</div>
+
+			<div className="flex flex-col justify-center items-center">
+				<p className="text-xs">
+					Location:
+					<span className="font-medium"> {props.module.location}</span>
 				</p>
 			</div>
 

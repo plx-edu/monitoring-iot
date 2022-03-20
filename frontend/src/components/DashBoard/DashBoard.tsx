@@ -14,7 +14,7 @@ export default function DashBoard() {
 	return (
 		<section className="flex flex-col h-full">
 			Modules:
-			<section className=" flex flex-row flex-wrap m-1 gap-1">
+			<section className=" flex flex-row flex-wrap justify-center m-1 gap-1">
 				{items.map((module) => (
 					<Module key={module.id} module={module} />
 				))}

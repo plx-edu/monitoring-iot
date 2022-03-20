@@ -39,6 +39,7 @@ export class ModulesService {
       include: {
         state_log: true,
         data_log: true,
+        type_ref: true,
       },
       orderBy: {
         id: 'asc',
@@ -54,6 +55,7 @@ export class ModulesService {
       include: {
         state_log: true,
         data_log: true,
+        type_ref: true,
       },
     });
   }
