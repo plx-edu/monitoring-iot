@@ -59,9 +59,9 @@ export class ModulesService {
   }
 
   async update(id: number, umDto: UpdateModuleDto) {
-    const currentUptimeStart = this.prisma.module.findUnique({
+    const currentModule = await this.prisma.module.findUnique({
       where: { id: id },
-      select: { uptime_start: true },
+      select: { uptime_start: true, current_state: true },
     });
 
     return await this.prisma.module.update({
@@ -72,22 +72,29 @@ export class ModulesService {
         // 1. Update module
         // if state switches to false, value becomes null
         current_value: umDto.current_state ? umDto.current_value : null,
-        current_state: umDto.current_state,
+        current_state:
+          currentModule.current_state === umDto.current_state
+            ? currentModule.current_state
+            : umDto.current_state,
 
         // set new uptimeStart if state(true) and current uptimeStart(null)
         uptime_start: umDto.current_state
-          ? currentUptimeStart[0] !== null
-            ? currentUptimeStart[0]
+          ? currentModule.uptime_start !== null
+            ? currentModule.uptime_start
             : new Date(Date.now())
           : null,
 
         // 2. Insert corresponding state log
-        state_log: {
-          create: {
-            state: umDto.current_state,
-            user_set: umDto.user_set,
-          },
-        },
+        // insert state_log if current state different from new one
+        state_log:
+          currentModule.current_state !== umDto.current_state
+            ? {
+                create: {
+                  state: umDto.current_state,
+                  user_set: umDto.user_set,
+                },
+              }
+            : {},
         // 3. Insert corresponding data log
         data_log: {
           create: { measured: umDto.current_value },
