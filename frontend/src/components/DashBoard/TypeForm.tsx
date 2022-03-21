@@ -21,7 +21,7 @@ export default function TypeForm() {
 		console.log(unit.trim().toLowerCase());
 		const newType = {
 			name: name.trim().toLowerCase(),
-			unit: unit.trim().toLowerCase(),
+			unit: unit.trim(),
 		};
 
 		fetch(apiResource("types"), apiRequest("post", newType))
@@ -63,11 +63,15 @@ export default function TypeForm() {
 					/>
 				</section>
 				<section className="flex gap-2 justify-end text-white">
-					<button className="flex justify-center items-center w-6 h-6 bg-zinc-800" type="button" onClick={clearForm}>
+					<button
+						className="flex justify-center items-center w-6 h-6 bg-zinc-800  hover:bg-stone-500"
+						type="button"
+						onClick={clearForm}
+					>
 						<AiFillCloseSquare />
 					</button>
 					<button
-						className="flex justify-center items-center h-6 px-2 bg-zinc-800"
+						className="flex justify-center items-center h-6 px-2 bg-zinc-800 hover:bg-stone-500"
 						type="button"
 						onClick={handleSubmit}
 					>
@@ -76,11 +80,14 @@ export default function TypeForm() {
 				</section>
 			</section>
 
+			{/* Types Display */}
 			<section className="flex flex-col w-80 gap-2 m-auto mt-2 p-2 border-2 border-zinc-500">
 				<p className="flex justify-center bg-zinc-800 text-white">Types</p>
-				<div className="flex flex-wrap">
+				<div className="flex flex-wrap justify-center items-center gap-1">
 					{types.map((item) => (
-						<article key={item.id}>{item.name}</article>
+						<article className="flex justify-center p-2 bg-zinc-800 text-white" key={item.id}>
+							<p className="">{item.name}</p>
+						</article>
 					))}
 				</div>
 			</section>

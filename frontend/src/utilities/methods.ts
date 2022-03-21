@@ -4,7 +4,7 @@ export function getNavLinks() {
 	return [
 		{page: "Home", path: "/"},
 		{page: "New Module", path: "/module"},
-		// {page: "New Type", path: "/type"},
+		{page: "New Type", path: "/type"},
 	];
 }
 
