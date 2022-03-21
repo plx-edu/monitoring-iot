@@ -37,21 +37,21 @@ export default function Module(props: {module: typeModule | undefined}) {
 				<div className="flex flex-col h-full justify-center items-center">
 					<p className="text-4xl font-semibold">
 						{props.module.current_value ? props.module.current_value : "n/a"}
-						<span className="text-xl font-light"> {props.module.current_value ? props.module.type_ref.unit : ""}</span>
+						<span className="text-xl font-normal"> {props.module.current_value ? props.module.type_ref.unit : ""}</span>
 					</p>
 				</div>
 
 				<div className="flex flex-col justify-center items-center">
-					<p className="text-xs">
+					<p className="text-xs font-normal">
 						Uptime:
-						<span className="font-medium"> {getUptime(props.module.uptime_start)}</span>
+						<span className="font-semibold"> {getUptime(props.module.uptime_start)}</span>
 					</p>
 				</div>
 
 				<div className="flex flex-col justify-center items-center">
 					<p className="text-xs">
 						Location:
-						<span className="font-medium"> {props.module.location}</span>
+						<span className="font-semibold"> {props.module.location}</span>
 					</p>
 				</div>
 

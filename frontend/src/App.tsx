@@ -4,6 +4,8 @@ import {Routes, Route} from "react-router";
 import DashBoard from "./components/DashBoard/DashBoard";
 import Module from "./components/Module/Module";
 import ModuleDetail from "./components/Module/ModuleDetail";
+import ModuleForm from "./components/Module/ModuleForm";
+import TypeForm from "./components/DashBoard/TypeForm";
 
 function App() {
 	return (
@@ -11,7 +13,9 @@ function App() {
 			<Layout>
 				<Routes>
 					<Route path="/" element={<DashBoard />} />
+					<Route path="/module/" element={<ModuleForm />} />
 					<Route path="/module/:id" element={<ModuleDetail />} />
+					<Route path="/type/" element={<TypeForm />} />
 				</Routes>
 			</Layout>
 		</section>

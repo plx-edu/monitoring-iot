@@ -3,7 +3,8 @@ import {useEffect, useState} from "react";
 export function getNavLinks() {
 	return [
 		{page: "Home", path: "/"},
-		// {page: "New Module", path: "/module"},
+		{page: "New Module", path: "/module"},
+		// {page: "New Type", path: "/type"},
 	];
 }
 
