@@ -3,16 +3,21 @@ import {useParams} from "react-router";
 import {typeModule} from "../../utilities/types";
 import {AiOutlineCheckCircle, AiOutlineWarning} from "react-icons/ai";
 import {NavLink} from "react-router-dom";
-import {getUptime} from "../../utilities/methods";
+import {getRandNb, getUptime, startInterval} from "../../utilities/methods";
 
 export default function Module(props: {module: typeModule | undefined}) {
-	const {id} = useParams();
+	// const {id} = useParams();
 	// const [module, setModule] = useState(null);
 
 	// useEffect(() => {
 	// 	fetch(`http://localhost:3001/modules/1`)
 	// 		.then((res) => res.json())
 	// 		.then((result) => console.log(result));
+	// }, []);
+
+	// useEffect(() => {
+	// 	console.log(props.module?.name, ":::", getRandNb(0, 25));
+	// 	// startInterval(0.5);
 	// }, []);
 
 	if (props.module === undefined) {

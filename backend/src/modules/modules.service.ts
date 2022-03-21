@@ -78,7 +78,7 @@ export class ModulesService {
       data: {
         // 1. Update module
         // if state switches to false, value becomes null
-        current_value: umDto.current_state ? umDto.current_value : null,
+        current_value: currentModule.current_state ? umDto.current_value : null,
         current_state:
           currentModule.current_state === umDto.current_state
             ? currentModule.current_state

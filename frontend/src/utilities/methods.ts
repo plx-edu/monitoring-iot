@@ -82,15 +82,17 @@ export function getModuleName() {
 	// 	console.log("suedfe");
 	// }, []);
 }
-export async function startInterval(minutes: number) {
-	// interval in ms
-	// 1000 = 1sec
-	const seconds = 60 * 1000;
-	const interval = minutes * seconds;
 
+export async function startInterval(minutes: number) {
 	setInterval(() => {
 		console.log(getRandNb(0, 20));
-	}, interval);
+		getRandNb(0, 20);
+	}, msToMins(minutes));
+}
+
+export function msToMins(minutes: number) {
+	// 1000ms = 1sec
+	return minutes * (60 * 1000);
 }
 
 export function apiResource(resource: string, id?: number | string) {
