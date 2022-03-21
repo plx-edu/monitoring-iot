@@ -5,7 +5,7 @@ import DashBoard from "./components/DashBoard/DashBoard";
 import ModuleDetail from "./components/Module/ModuleDetail";
 import ModuleForm from "./components/Module/ModuleForm";
 import TypeForm from "./components/DashBoard/TypeForm";
-import {apiRequest, apiResource, getRandNb, msToMins, startInterval} from "./utilities/methods";
+import {apiRequest, apiResource, formatDate, getRandNb, msToMins, startInterval} from "./utilities/methods";
 import {createContext, useEffect, useState} from "react";
 import {typeModule} from "./utilities/types";
 
@@ -14,6 +14,7 @@ export const ModulesContext = createContext<any>([[], () => {}]);
 
 function App() {
 	const [modulesList, setModulesList] = useState<typeModule[]>([]);
+	const [startScript, setStartScript] = useState(false);
 
 	useEffect(() => {
 		console.log(":: Hello Module ::");
@@ -22,13 +23,13 @@ function App() {
 			.then((res) => res.json())
 			.then((result) => {
 				setModulesList(result);
+				setTimeout(() => {
+					setStartScript(result.length > 0);
+				}, 5 * 1000);
 			});
-
-		// setTimeout(startScripts, 10000);
 	}, []);
 
-	// Start script when modulesList's state
-	// has been updated
+	// *Automatic* Script
 	useEffect(() => {
 		if (modulesList.length <= 0) return;
 		console.log(":: Starting Script ::");
@@ -58,7 +59,7 @@ function App() {
 			fetch(apiResource("modules", moduleToUpdate.id), apiRequest("patch", dataToUpdate))
 				.then((res) => res.json())
 				.then((result) => {
-					console.log(result);
+					console.log(formatDate(new Date(Date.now())), result);
 
 					setModulesList(
 						modulesList.map((x) => {
@@ -67,10 +68,8 @@ function App() {
 						}),
 					);
 				});
-		}, msToMins(5));
-	}, [modulesList]);
-
-	function startScripts(moduleToUpdat?: typeModule) {}
+		}, msToMins(10));
+	}, [startScript]);
 
 	return (
 		<section className="App h-screen w-screen bg-slate-300 overflow-hidden">

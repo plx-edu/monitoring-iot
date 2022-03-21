@@ -78,23 +78,32 @@ export class ModulesService {
       data: {
         // 1. Update module
         // if state switches to false, value becomes null
-        current_value: currentModule.current_state ? umDto.current_value : null,
+        current_value:
+          currentModule.current_state &&
+          (umDto.current_state === undefined || umDto.current_state)
+            ? umDto.current_value
+            : null,
+
         current_state:
           currentModule.current_state === umDto.current_state
             ? currentModule.current_state
             : umDto.current_state,
 
         // set new uptimeStart if state(true) and current uptimeStart(null)
-        uptime_start: umDto.current_state
-          ? currentModule.uptime_start !== null
+        uptime_start:
+          umDto.current_state &&
+          umDto.current_state !== currentModule.current_state
+            ? new Date(Date.now())
+            : (umDto.current_state === undefined || umDto.current_state) &&
+              currentModule.current_state
             ? currentModule.uptime_start
-            : new Date(Date.now())
-          : null,
+            : null,
 
         // 2. Insert corresponding state log
         // insert state_log if current state different from new one
         state_log:
-          currentModule.current_state !== umDto.current_state
+          umDto.current_state !== undefined &&
+          umDto.current_state !== currentModule.current_state
             ? {
                 create: {
                   state: umDto.current_state,
@@ -105,6 +114,8 @@ export class ModulesService {
 
         // 3. Insert corresponding data log
         data_log:
+          currentModule.current_state &&
+          (umDto.current_state === undefined || umDto.current_state) &&
           umDto.current_value !== undefined
             ? {
                 create: { measured: umDto.current_value },
