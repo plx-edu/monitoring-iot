@@ -30,8 +30,7 @@ export default function ModuleForm() {
 			location: location.trim().toLowerCase(),
 			current_state: currentState,
 		};
-		// console.log("submitting form");
-		// console.log(newModule);
+
 		fetch(apiResource("modules"), apiRequest("post", newModule))
 			.then((res) => res.json())
 			.then((result) => {
@@ -57,7 +56,6 @@ export default function ModuleForm() {
 	}
 
 	function clearForm() {
-		// console.log("clearing form");
 		setName("");
 		setLocation("");
 		setTypeChoice(0);
@@ -70,7 +68,6 @@ export default function ModuleForm() {
 			<section className="flex flex-col gap-2">
 				<p className="p-1 bg-zinc-400">
 					<span className="font-semibold">{name ? name : "..."}</span>
-					{/* onChange={(e) => setLocation(e.target.value)} */}
 				</p>
 
 				{/* Select */}
@@ -96,7 +93,6 @@ export default function ModuleForm() {
 					onClick={() => setCurrentState(!currentState)}
 				>
 					<p>Starting State</p>
-					{/* <input type="checkbox" onClick={(e) => console.log(e.target.checked)} className="" /> */}
 					<p>{currentState ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}</p>
 				</button>
 
