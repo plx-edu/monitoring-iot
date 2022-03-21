@@ -17,6 +17,21 @@ export function getRandNb(a: number, b: number) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+export function getRandName(type: string) {
+	const vowels = ["a", "e", "i", "o", "u"];
+	let name = type.substring(0, 1).toUpperCase();
+
+	for (const k of type.substring(1)) {
+		if (name.length < 3) name += !vowels.includes(k.toLowerCase()) ? k.toUpperCase() : "";
+	}
+	// get random letter from number(ascii code)
+	const randLetter = String.fromCharCode(getRandNb(97, 122));
+	name += "-" + getRandNb(100, 999) + randLetter;
+	// console.log(name);
+
+	return name;
+}
+
 export function formatDate(date: Date) {
 	const d = new Date(date);
 	const day = d.getUTCDate();

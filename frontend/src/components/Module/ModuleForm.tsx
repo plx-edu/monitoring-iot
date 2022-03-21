@@ -1,28 +1,52 @@
 import React, {useEffect, useState} from "react";
 import {AiFillCloseSquare} from "react-icons/ai";
-import {apiResource} from "../../utilities/methods";
+import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
+import {apiResource, getRandName} from "../../utilities/methods";
+import {typeTypeRef} from "../../utilities/types";
 
 export default function ModuleForm() {
-	const [type, setType] = useState(0);
+	const [types, setTypes] = useState<typeTypeRef[]>([]);
+	const [typeChoice, setTypeChoice] = useState(0);
 	const [name, setName] = useState("");
-	const [currentState, setCurrentState] = useState(false);
+	const [currentState, setCurrentState] = useState(true);
 	const [location, setLocation] = useState("");
 
 	useEffect(() => {
 		fetch(apiResource("types"))
 			.then((res) => res.json())
 			.then((result) => {
-				// setTypes(result);
+				setTypes(result);
 			});
 	}, []);
 
 	function handleSubmit() {
+		if (name === "" || location === "" || typeChoice <= 0) return;
+
+		const newModule = {
+			name: name,
+			type: typeChoice,
+			location: location.trim().toLowerCase(),
+			current_state: currentState,
+		};
 		console.log("submitting form");
+		console.log(newModule);
+	}
+
+	function handleNaming(typeId: number) {
+		if (typeId <= 0) {
+			setName("");
+			return;
+		}
+		// Retrieve type name
+		const typeName = types.filter((x) => x.id === typeId)[0].name;
+
+		setTypeChoice(typeId);
+		setName(getRandName(typeName));
 	}
 
 	function clearForm() {
 		// console.log("clearing form");
-		setType(0);
+		// setType(0);
 		setName("");
 		setLocation("");
 	}
@@ -32,26 +56,47 @@ export default function ModuleForm() {
 			<p className="flex justify-center bg-zinc-800 text-white">New Module</p>
 			<section className="flex flex-col gap-2">
 				<p className="p-1 bg-zinc-400">
-					Name: <span className="font-semibold">{name ? name : "Module Name"}</span>
+					<span className="font-semibold">{name ? name : "..."}</span>
 					{/* onChange={(e) => setLocation(e.target.value)} */}
 				</p>
+
+				{/* Select */}
+				<select
+					className="p-2 capitalize bg-zinc-200"
+					onChange={(e) => {
+						handleNaming(+e.target.value);
+					}}
+				>
+					<option value="0">Select Type</option>
+
+					{types.map((t) => (
+						<option className="capitalize" key={t.id} value={t.id}>
+							{t.name} ({t.unit})
+						</option>
+					))}
+				</select>
+
+				{/* Checkbox */}
+				<button
+					className="flex justify-between items-center bg-zinc-200 p-2"
+					onClick={() => setCurrentState(!currentState)}
+				>
+					<p>Starting State</p>
+					{/* <input type="checkbox" onClick={(e) => console.log(e.target.checked)} className="" /> */}
+					<p>{currentState ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}</p>
+				</button>
+
+				{/* Input */}
 				<input
-					className=" p-1"
+					className="p-1"
 					type="text"
 					value={location}
 					onChange={(e) => setLocation(e.target.value)}
 					placeholder="Location (ex: Vehicle/City/etc.)"
 				/>
-				<select className="">
-					<option value="0">Select Type</option>
-
-					{
-						// <option key={} value={}>
-						// 	{}
-						// </option>
-					}
-				</select>
 			</section>
+
+			{/* Button */}
 			<section className="flex gap-2 justify-end text-white">
 				<button
 					className="flex justify-center items-center w-6 h-6 bg-zinc-800 hover:bg-stone-500"
@@ -61,7 +106,7 @@ export default function ModuleForm() {
 					<AiFillCloseSquare />
 				</button>
 				<button
-					className="flex justify-center items-center h-6 px-2 bg-zinc-800 hover:bg-stone-500"
+					className="flex justify-center items-center h-6 p-2 bg-zinc-800 hover:bg-stone-500"
 					type="button"
 					onClick={handleSubmit}
 				>

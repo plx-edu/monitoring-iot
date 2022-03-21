@@ -84,7 +84,7 @@ export default function ModuleDetail() {
 				{/* Logs Section */}
 				<section className="flex flex-col w-full items-center gap-5 pt-2">
 					{/* Graph */}
-					<section className="flex flex-col max-h-64 w-5/6 overflow-hidden rounded border border-zinc-800">
+					<section className="flex flex-col w-5/6 overflow-hidden rounded border border-zinc-800">
 						<div className="flex flex-row  bg-zinc-800 text-white">
 							<h1 className="font-bold w-full text-center">Graph...</h1>
 						</div>
