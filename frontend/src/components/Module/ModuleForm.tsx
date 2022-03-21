@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {AiFillCloseSquare} from "react-icons/ai";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
-import {apiResource, getRandName} from "../../utilities/methods";
+import {useNavigate} from "react-router";
+import {apiRequest, apiResource, getRandName} from "../../utilities/methods";
 import {typeTypeRef} from "../../utilities/types";
 
 export default function ModuleForm() {
@@ -10,6 +11,7 @@ export default function ModuleForm() {
 	const [name, setName] = useState("");
 	const [currentState, setCurrentState] = useState(true);
 	const [location, setLocation] = useState("");
+	const redirect = useNavigate();
 
 	useEffect(() => {
 		fetch(apiResource("types"))
@@ -28,8 +30,18 @@ export default function ModuleForm() {
 			location: location.trim().toLowerCase(),
 			current_state: currentState,
 		};
-		console.log("submitting form");
-		console.log(newModule);
+		// console.log("submitting form");
+		// console.log(newModule);
+		fetch(apiResource("modules"), apiRequest("post", newModule))
+			.then((res) => res.json())
+			.then((result) => {
+				// console.log("New module:", result);
+
+				let createdId = result.id;
+
+				clearForm();
+				redirect(`/module/${createdId}`);
+			});
 	}
 
 	function handleNaming(typeId: number) {
@@ -46,9 +58,10 @@ export default function ModuleForm() {
 
 	function clearForm() {
 		// console.log("clearing form");
-		// setType(0);
 		setName("");
 		setLocation("");
+		setTypeChoice(0);
+		setCurrentState(true);
 	}
 
 	return (
@@ -66,6 +79,7 @@ export default function ModuleForm() {
 					onChange={(e) => {
 						handleNaming(+e.target.value);
 					}}
+					value={typeChoice}
 				>
 					<option value="0">Select Type</option>
 
@@ -110,7 +124,7 @@ export default function ModuleForm() {
 					type="button"
 					onClick={handleSubmit}
 				>
-					Add Type
+					Add Module
 				</button>
 			</section>
 		</section>
