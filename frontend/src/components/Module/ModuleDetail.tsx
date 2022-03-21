@@ -4,6 +4,7 @@ import {placeholder, typeModule} from "../../utilities/types";
 import {AiOutlineWarning} from "react-icons/ai";
 import {startInterval, formatDate, apiResource, apiRequest} from "../../utilities/methods";
 import Module from "./Module";
+import Chart from "./Chart";
 
 export default function ModuleDetail() {
 	const {id} = useParams();
@@ -88,8 +89,7 @@ export default function ModuleDetail() {
 							<h1 className="font-bold w-full text-center">Graph...</h1>
 						</div>
 						<div className="flex">
-							{/* <p className="w-full text-center">"n/a"</p> */}
-							<canvas className="p-10" id="chartLine"></canvas>
+							<Chart logData={item?.data_log} stateData={item?.state_log} />
 						</div>
 					</section>
 
@@ -131,27 +131,3 @@ export default function ModuleDetail() {
 		);
 	}
 }
-
-// function setupChart() {
-// 	const labels = ["January", "February", "March", "April", "May", "June"];
-// 	const data = {
-// 		labels: labels,
-// 		datasets: [
-// 			{
-// 				label: "My First dataset",
-// 				backgroundColor: "hsl(252, 82.9%, 67.8%)",
-// 				borderColor: "hsl(252, 82.9%, 67.8%)",
-// 				data: [0, 10, 5, 2, 20, 30, 45],
-// 			},
-// 		],
-// 	};
-
-// 	const configLineChart = {
-// 		type: "line",
-// 		data,
-// 		options: {},
-// 	};
-
-// 	// let chartLine = new Chart(document.getElementById("chartLine"), configLineChart);
-// 	// let chartLine = (document.getElementById("chartLine"), configLineChart);
-// }

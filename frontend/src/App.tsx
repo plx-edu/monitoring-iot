@@ -6,6 +6,7 @@ import Module from "./components/Module/Module";
 import ModuleDetail from "./components/Module/ModuleDetail";
 import ModuleForm from "./components/Module/ModuleForm";
 import TypeForm from "./components/DashBoard/TypeForm";
+import Chart from "./components/Module/Chart";
 
 function App() {
 	return (
