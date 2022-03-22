@@ -27,7 +27,7 @@ export default function ModuleForm() {
 		const newModule = {
 			name: name,
 			type: typeChoice,
-			location: location.trim().toLowerCase(),
+			location: location.trim(),
 			current_state: currentState,
 		};
 
