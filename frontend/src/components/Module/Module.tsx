@@ -45,6 +45,7 @@ export default function Module(props: {module: typeModule | undefined}) {
 					</p>
 				</div>
 
+				{/* Uptime */}
 				<div className="flex flex-col justify-center items-center">
 					<p className="text-xs font-normal">
 						Uptime:
@@ -53,6 +54,16 @@ export default function Module(props: {module: typeModule | undefined}) {
 					</p>
 				</div>
 
+				{/* Data Sent Count */}
+				<div className="flex flex-col justify-center items-center">
+					<p className="text-xs font-normal">
+						Sent Data:
+						{/* <span className="font-semibold"> {getUptime(props.module.uptime_start)}</span> */}
+						<span className="font-semibold"> {props.module.data_log.length}</span>
+					</p>
+				</div>
+
+				{/* Location */}
 				<div className="flex flex-col justify-center items-center">
 					<p className="text-xs">
 						Location:
