@@ -4,7 +4,7 @@ import {typeModule} from "../../utilities/types";
 import Module from "../Module/Module";
 
 // Script interval in minutes
-const minInterval = 30;
+const minInterval = 20;
 
 export default function DashBoard() {
 	const [items, setItems] = useState<typeModule[]>([]);
