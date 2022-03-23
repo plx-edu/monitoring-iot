@@ -167,7 +167,6 @@ async function randModuleChange() {
     const modList = await modServ.findAllActive();
 
     if (modList.length <= 0) return;
-    console.log(modList);
 
     const utility = new UtilitiesService();
     const modToUpdate = modList[utility.getRandNb(0, modList.length)];
@@ -194,14 +193,10 @@ async function randModuleChange() {
         ? newData.state
         : newData.measurement;
 
-    // const changedModule = await modServ.update(modToUpdate.id, dataToUpdate);
-    // console.log(changedModule);
     await modServ.update(modToUpdate.id, dataToUpdate);
   }, minutes * (60 * 1000));
 
-  console.log(':: Module Change Script (end) ::');
   return () => clearInterval(int);
 }
 
-console.log(':::::');
 randModuleChange();
