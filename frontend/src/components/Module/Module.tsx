@@ -1,26 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import React from "react";
 import {typeModule} from "../../utilities/types";
 import {AiOutlineCheckCircle, AiOutlineWarning} from "react-icons/ai";
 import {NavLink} from "react-router-dom";
-import {getRandNb, getUptime, startInterval} from "../../utilities/methods";
+import {getUptime} from "../../utilities/methods";
 
 export default function Module(props: {module: typeModule | undefined}) {
-	const [uptime, setUptime] = useState("n/a");
-
-	useEffect(() => {
-		if (props.module) setUptime(getUptime(props.module.uptime_start));
-		// setInterval(() => (props.module ? setUptime(getUptime(props.module?.uptime_start)) : setUptime("n/a")), 5 * 1000);
-
-		setInterval(async () => {
-			if (props.module) setUptime(getUptime(props.module.uptime_start));
-			// console.log(":::", uptime);
-		}, 10 * 1000);
-	}, []);
-	// }, [props.module]);
-
 	if (props.module === undefined) {
-		return <div>Module error.</div>;
+		return <div>Module error</div>;
 	} else {
 		return (
 			<article
@@ -40,7 +26,8 @@ export default function Module(props: {module: typeModule | undefined}) {
 				<p className="text-xs capitalize">{props.module.type_ref.name}</p>
 				<div className="flex flex-col h-full justify-center items-center">
 					<p className="text-4xl font-semibold">
-						{props.module.current_value ? props.module.current_value : "n/a"}
+						{/* {props.module.current_value ? props.module.current_value : "n/a"} */}
+						{props.module.current_value ? props.module.current_value : props.module.current_value === 0 ? 0 : "n/a"}
 						<span className="text-xl font-normal"> {props.module.current_value ? props.module.type_ref.unit : ""}</span>
 					</p>
 				</div>
@@ -49,8 +36,7 @@ export default function Module(props: {module: typeModule | undefined}) {
 				<div className="flex flex-col justify-center items-center">
 					<p className="text-xs font-normal">
 						Uptime:
-						{/* <span className="font-semibold"> {getUptime(props.module.uptime_start)}</span> */}
-						<span className="font-semibold"> {uptime}</span>
+						<span className="font-semibold"> {getUptime(props.module.uptime_start)}</span>
 					</p>
 				</div>
 

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router";
-import {placeholder, typeModule} from "../../utilities/types";
+import {typeModule} from "../../utilities/types";
 import {AiOutlineWarning} from "react-icons/ai";
-import {startInterval, formatDate, apiResource, apiRequest} from "../../utilities/methods";
+import {formatDate, apiResource, apiRequest} from "../../utilities/methods";
 import Module from "./Module";
 import Chart from "./Chart";
 
@@ -13,16 +13,26 @@ export default function ModuleDetail() {
 	const redirect = useNavigate();
 
 	useEffect(() => {
-		fetch(apiResource("modules", id))
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					setItem(result);
-				},
-				(error) => setError(error),
-			);
-		// startInterval(1);
-	}, []);
+		function fetchModule() {
+			fetch(apiResource("modules", id))
+				.then((res) => res.json())
+				.then(
+					(result) => {
+						setItem((x) => (x = result));
+					},
+					(error) => setError(error),
+				);
+		}
+		fetchModule();
+
+		const refresh = setInterval(() => {
+			fetchModule();
+		}, 10 * 1000);
+
+		return () => {
+			clearInterval(refresh);
+		};
+	}, [id]);
 
 	function handleToggle() {
 		const newState = {

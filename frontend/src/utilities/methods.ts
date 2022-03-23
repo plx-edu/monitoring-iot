@@ -1,5 +1,3 @@
-import {useEffect, useState} from "react";
-
 export function getNavLinks() {
 	return [
 		{page: "Home", path: "/"},
@@ -34,12 +32,8 @@ export function getRandName(type: string) {
 
 export function formatDate(date: Date) {
 	const d = new Date(date);
-	const day = d.getUTCDate();
-	const month = d.getUTCMonth() + 1;
-	const year = d.getUTCFullYear();
 
 	const options: any = {
-		// weekday: "long",
 		year: "numeric",
 		month: "short",
 		day: "numeric",
@@ -50,15 +44,10 @@ export function formatDate(date: Date) {
 		hour12: false,
 	};
 
-	// console.log(day, month, year);
-	// console.log(d.toLocaleDateString("fr-FR"));
-	// return d.toLocaleString();
-	// return d.toLocaleDateString("fr-FR");
-	// return d.toLocaleString("fr-FR", options);
 	return d.toLocaleDateString("fr-FR", options);
 }
 
-export function getUptime(startTime: Date) {
+export function getUptime(startTime: Date | null) {
 	if (!startTime) return "n/a";
 
 	let t = Date.now() - new Date(startTime).getTime();
@@ -97,7 +86,6 @@ export function msToMins(minutes: number) {
 
 export function apiResource(resource: string, id?: number | string) {
 	// const methodsAllowed = ["get", "post", "patch", "delete"];
-
 	// if (!methodsAllowed.includes(method.toLowerCase())) return;
 
 	return `http://localhost:3001/${resource}/${id ? id : ""}`;
