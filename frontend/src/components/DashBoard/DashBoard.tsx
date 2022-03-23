@@ -13,7 +13,7 @@ export default function DashBoard() {
 	const [checkChanges, setCheckChanges] = useState(false);
 
 	useEffect(() => {
-		console.log(":: Modules Dashboard ::");
+		// console.log(":: Modules Dashboard ::");
 
 		// Wait before starting script
 		const allowScript = setTimeout(() => {
@@ -45,7 +45,7 @@ export default function DashBoard() {
 
 	return (
 		<section className="flex flex-col h-full">
-			Dashboard:{checkChanges ? "on" : "off"}
+			Dashboard:
 			<section className=" flex flex-row flex-wrap justify-center m-1 gap-1">
 				{items.map((module: typeModule) => (
 					<Module key={module.id} module={module} />
