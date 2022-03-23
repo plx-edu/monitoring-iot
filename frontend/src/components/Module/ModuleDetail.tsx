@@ -2,9 +2,13 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {typeModule} from "../../utilities/types";
 import {AiOutlineWarning} from "react-icons/ai";
-import {formatDate, apiResource, apiRequest} from "../../utilities/methods";
+import {formatDate, apiResource, apiRequest, msToMins} from "../../utilities/methods";
 import Module from "./Module";
 import Chart from "./Chart";
+
+// Script interval in minutes
+// msToMins(minInterval)
+const minInterval = 0.2;
 
 export default function ModuleDetail() {
 	const {id} = useParams();
@@ -27,7 +31,7 @@ export default function ModuleDetail() {
 
 		const refresh = setInterval(() => {
 			fetchModule();
-		}, 10 * 1000);
+		}, msToMins(minInterval));
 
 		return () => {
 			clearInterval(refresh);
