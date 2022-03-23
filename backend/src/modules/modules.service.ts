@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { UtilitiesService } from 'src/utilities/utilities.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
+
+// Chances of failure in %
+const failureRate = 10;
+const minutes = 10;
 
 @Injectable()
 export class ModulesService {
@@ -48,6 +53,19 @@ export class ModulesService {
       },
       orderBy: {
         id: 'asc',
+      },
+    });
+  }
+
+  async findAllActive() {
+    return await this.prisma.module.findMany({
+      where: {
+        uptime_start: {
+          not: null,
+        },
+      },
+      select: {
+        id: true,
       },
     });
   }
@@ -138,3 +156,52 @@ export class ModulesService {
     });
   }
 }
+
+// Random module insert script
+const modServ = new ModulesService(new PrismaService());
+async function randModuleChange() {
+  console.log(':: Starting Module Change Script ::');
+
+  const int = setInterval(async () => {
+    // Retrieve list of all existing modules
+    const modList = await modServ.findAllActive();
+
+    if (modList.length <= 0) return;
+    console.log(modList);
+
+    const utility = new UtilitiesService();
+    const modToUpdate = modList[utility.getRandNb(0, modList.length)];
+
+    // Seems to get lost at some point...
+    if (!modToUpdate) return;
+
+    const newData = {
+      state: {
+        current_state: false,
+        user_set: false,
+      },
+      measurement: {
+        current_value: utility.getRandNb(0, 50),
+        user_set: false,
+      },
+    };
+
+    // Type of change based on failure rate
+    // <= failure rate: new state
+    // else: new measurement
+    const dataToUpdate: UpdateModuleDto =
+      utility.getRandNb(1, 100) <= failureRate
+        ? newData.state
+        : newData.measurement;
+
+    // const changedModule = await modServ.update(modToUpdate.id, dataToUpdate);
+    // console.log(changedModule);
+    await modServ.update(modToUpdate.id, dataToUpdate);
+  }, minutes * (60 * 1000));
+
+  console.log(':: Module Change Script (end) ::');
+  return () => clearInterval(int);
+}
+
+console.log(':::::');
+randModuleChange();

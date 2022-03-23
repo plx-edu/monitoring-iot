@@ -4,14 +4,19 @@ import {typeModule} from "../../utilities/types";
 import Module from "../Module/Module";
 
 // Script interval in minutes
-const minInterval = 20;
+// msToMins(minInterval)
+const minInterval = 0.2;
 
 export default function DashBoard() {
 	const [items, setItems] = useState<typeModule[]>([]);
 	const [startScript, setStartScript] = useState(false);
+	const [changeInterval, setChangeInterval] = useState(false);
 
 	useEffect(() => {
-		// console.log(":: Modules Dashboard ::");
+		console.log(":: Modules Dashboard ::");
+		const intervalId = setInterval(() => {
+			setChangeInterval((ci) => !ci);
+		}, msToMins(minInterval));
 
 		fetch(apiResource("modules"))
 			.then((res) => res.json())
@@ -23,52 +28,29 @@ export default function DashBoard() {
 					setStartScript(result.length > 0);
 				}, 15 * 1000);
 			});
+
+		return () => clearInterval(intervalId);
 	}, []);
 
+	/*
 	// *Automatic* Script
 	useEffect(() => {
-		if (items.length <= 0) return;
-		// console.log(":: Starting Script ::");
-
-		setInterval(() => {
-			const moduleToUpdate = items[getRandNb(0, items.length - 1)];
-			// console.log("#", moduleToUpdate);
-
-			// If module is not active, don't do anything :/
-			if (!moduleToUpdate.current_state) return;
-
-			const newData = {
-				state: {
-					current_state: false,
-					user_set: false,
-				},
-				measurement: {
-					current_value: getRandNb(0, 50),
-				},
-			};
-
-			// More chances of updating measurement than failing module state
-			const dataToUpdate = getRandNb(1, 100) <= 10 ? newData.state : newData.measurement;
-			// console.log("::", newData);
-
-			fetch(apiResource("modules", moduleToUpdate.id), apiRequest("patch", dataToUpdate))
-				.then((res) => res.json())
-				.then((result) => {
-					console.log(formatDate(new Date(Date.now())), result);
-
-					setItems(
-						items.map((x) => {
-							if (x.id === result.id) return result;
-							return x;
-						}),
-					);
-				});
-		}, msToMins(minInterval));
 	}, [startScript]);
+*/
+
+	useEffect(() => {
+		console.log(changeInterval ? "console" : "logged", items.length);
+
+		// return () => {
+		// 	second
+		// }
+	}, [changeInterval]);
+
+	// function random
 
 	return (
 		<section className="flex flex-col h-full">
-			Dashboard:
+			Dashboard:{changeInterval ? "on" : "off"}
 			<section className=" flex flex-row flex-wrap justify-center m-1 gap-1">
 				{items.map((module: typeModule) => (
 					<Module key={module.id} module={module} />
